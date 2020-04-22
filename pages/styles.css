@@ -1,0 +1,30 @@
+html, body {
+	margin: 0;
+	font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+body {
+	max-width: 32rem;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+label {
+	display: flex;
+	flex-direction: column;
+}
+
+button {
+	padding: 0.5rem;
+	border: 1px solid #dfdfdf;
+	background: white;
+	cursor: pointer;
+}
+
+input {
+	min-width: 16rem;
+}

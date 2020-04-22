@@ -19,7 +19,7 @@
   },
 
   "options_ui": {
-    "page": "index.html",
+    "page": "config.html",
     "browser_style": true
   }
 
