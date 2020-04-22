@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Gitmarks",
+  "version": "1.0",
+
+  "description": "",
+
+  "icons": {
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "browser_action": {
+    "default_title": "Add Bookmark",
+    "default_popup": "index.html",
+    "default_icon": "red_book.svg"
+  },
+
+  "options_ui": {
+    "page": "index.html",
+    "browser_style": true
+  }
+
+}
