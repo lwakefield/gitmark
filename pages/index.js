@@ -70,8 +70,7 @@ export default connect('config')(({ config }) => {
     if (typeof browser !== 'undefined') {
       (async () => {
         const [ tab ] = await browser.tabs.query({ active: true, currentWindow: true });
-
-        setCurrent({ current: { url: tab.url, title: tab.title } });
+        setCurrent({ url: tab.url, title: tab.title });
       })();
     }
   }, []);
@@ -105,9 +104,11 @@ export default connect('config')(({ config }) => {
         <button>Add</button>
       </form>
 
-      <Link href="/config">
-        Configuration
-      </Link>
+      <div style={{ fontSize: '0.7rem' }}>
+        <Link href="/config">Configuration</Link>
+        &nbsp;
+        <Link href="/about">About</Link>
+      </div>
 
     </div>
   );
