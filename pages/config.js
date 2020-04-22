@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 
-import { store, initConfig } from '../lib/store';
+import { store, initConfig, addNotification } from '../lib/store';
 import { connect } from 'unistore/preact';
 
 async function initializeNewRepository () {
@@ -21,6 +21,11 @@ async function initializeNewRepository () {
       }
     }
   );
+  if (createFromTemplateRequest.ok) {
+    addNotification({ type: 'success', message: 'Successfully initialized.' }); 
+  } else {
+    addNotification({ type: 'error', message: 'Something went wrong during initialization.' }); 
+  }
 }
 
 export default connect(['config', 'current'])(({ config, current }) => {
@@ -38,6 +43,8 @@ export default connect(['config', 'current'])(({ config, current }) => {
 
     store.setState({ config });
     localStorage.setItem('config', JSON.stringify(config));
+
+    addNotification({ type: 'success', message: 'Successfully updated configuration.' }); 
   }
 
   return (

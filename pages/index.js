@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch';
 
-import { store, initConfig } from '../lib/store';
+import { store, initConfig, addNotification } from '../lib/store';
 import { connect } from 'unistore/preact';
 
 async function addBookmark (ev) {
@@ -18,9 +18,13 @@ async function addBookmark (ev) {
       }
     }
   );
-  const body = await getBookmarksRequest.json();
+  if (!getBookmarksRequest.ok) {
+    addNotification({ type: 'error', message: 'Something went wrong adding bookmark.' }); 
+    return;
+  }
 
-  const bookmarks = getBookmarksRequest.ok ? atob(body.content) : '';
+  const body = await getBookmarksRequest.json();
+  const bookmarks = atob(body.content);
 
   const form = ev.target;
   const now = new Date().toISOString();
@@ -49,6 +53,13 @@ async function addBookmark (ev) {
       }
     }
   );
+
+  if (updateBookmarksRequest.ok) {
+    addNotification({ type: 'success', message: 'Successfully added bookmark.' }); 
+  } else {
+    addNotification({ type: 'error', message: 'Something went wrong adding bookmark.' }); 
+  }
+
 };
 
 export default connect('config')(({ config }) => {
