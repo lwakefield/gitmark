@@ -2,10 +2,15 @@
   "manifest_version": 2,
   "name": "Gitmarks",
   "version": "1.0",
+  "author": "Lawrence Wakefield <lawrence@iamlawrence.me>",
 
-  "description": "",
+  "description": "gitmark is a dead simple bookmarking browser extension that saves bookmarks to a GitHub repository.",
+
+  "homepage_url": "https://gitmark.lwakefield.now.sh/",
 
   "icons": {
+    "48": "red_book.svg",
+    "96": "red_book.svg"
   },
 
   "permissions": [
