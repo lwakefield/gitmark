@@ -3,6 +3,26 @@ import React, {useEffect} from 'react'
 import { store, initConfig } from '../lib/store';
 import { connect } from 'unistore/preact';
 
+async function initializeNewRepository () {
+  const { config } = store.getState();
+  const createFromTemplateRequest = await fetch(
+    `https://api.github.com/repos/lwakefield/gitmark-template/generate`,
+    {
+      body: JSON.stringify({
+        owner: config.username,
+        name: config.repositoryName,
+        private: true,
+      }),
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Basic ${btoa(`${config.username}:${config.token}`)}`,
+        'accept': 'application/vnd.github.baptiste-preview+json'
+      }
+    }
+  );
+}
+
 export default connect(['config', 'current'])(({ config, current }) => {
   useEffect(initConfig, []);
 
@@ -37,6 +57,7 @@ export default connect(['config', 'current'])(({ config, current }) => {
         </label>
         <button>Update</button>
       </form>
+      <button onClick={initializeNewRepository} style={{ width: '100%' }}>Initialize</button>
     </div>
   );
 });
