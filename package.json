@@ -1,6 +1,6 @@
 {
-  "name": "using-preact",
-  "version": "1.0.1",
+  "name": "Gitmark",
+  "version": "1.0.2",
   "scripts": {
     "dev": "next",
     "build": "next build",
