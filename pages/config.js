@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import Link from 'next/link'
 import { connect } from 'unistore/preact';
 
 import { store, initConfig, addNotification } from '../lib/store';
+import { encodeToBase64 } from '../lib/util';
 
 async function initializeNewRepository () {
   const { config } = store.getState();
@@ -17,7 +18,7 @@ async function initializeNewRepository () {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization': `Basic ${btoa(`${config.username}:${config.token}`)}`,
+        'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`,
         'accept': 'application/vnd.github.baptiste-preview+json'
       }
     }

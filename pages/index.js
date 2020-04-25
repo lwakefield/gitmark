@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch';
+import { connect } from 'unistore/preact';
 
 import { store, initConfig, addNotification } from '../lib/store';
-import { connect } from 'unistore/preact';
+import { encodeToBase64, decodeFromBase64 } from '../lib/util';
 
 async function addBookmark (ev) {
   ev.preventDefault();
@@ -14,7 +15,7 @@ async function addBookmark (ev) {
     `https://api.github.com/repos/${config.username}/${config.repositoryName}/contents/bookmarks.jsonl`,
     {
       headers: {
-        'authorization': `Basic ${btoa(`${config.username}:${config.token}`)}`
+        'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`
       }
     }
   );
@@ -24,7 +25,7 @@ async function addBookmark (ev) {
   }
 
   const body = await getBookmarksRequest.json();
-  const bookmarks = atob(body.content);
+  const bookmarks = decodeFromBase64(body.content);
 
   const form = ev.target;
   const now = new Date().toISOString();
@@ -43,13 +44,13 @@ async function addBookmark (ev) {
     {
       body: JSON.stringify({
         message: `Added "${newBookmark.url}"`,
-        content: btoa(newBookmarks),
+        content: encodeToBase64(newBookmarks),
         sha: body.sha,
       }),
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'authorization': `Basic ${btoa(`${config.username}:${config.token}`)}`
+        'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`
       }
     }
   );
