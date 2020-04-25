@@ -14,5 +14,8 @@
     "react": "github:preact-compat/react#1.0.0",
     "react-dom": "github:preact-compat/react-dom#1.0.0",
     "unistore": "^3.5.1"
+  },
+  "devDependencies": {
+    "web-ext": "^4.2.0"
   }
 }
