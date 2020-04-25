@@ -1,36 +1,7 @@
-# Preact example
+# Gitmark
 
-This example uses [Preact](https://github.com/preactjs/preact) instead of React. It's a React like UI framework which is fast and small.
+__gitmark__ is a dead simple bookmarking browser extension that saves bookmarks to a GitHub repository.
 
-## How to use
+Currently, only Firefox with GitHub is supported. Please contribute if you want more platforms and providers supported!
 
-### Using `create-next-app`
-
-Execute [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npm init next-app --example using-preact using-preact-app
-# or
-yarn create next-app --example using-preact using-preact-app
-```
-
-### Download manually
-
-Download the example:
-
-```bash
-curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/using-preact
-cd using-preact
-```
-
-Install it and run:
-
-```bash
-npm install
-npm run dev
-# or
-yarn
-yarn dev
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+You can download the Firefox extensions from [the release page here](https://github.com/lwakefield/gitmark/releases).
