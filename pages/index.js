@@ -106,7 +106,7 @@ export default connect('config')(({ config }) => {
 
       <div style={{ fontSize: '0.7rem' }}>
         <Link href="/config">Configuration</Link>
-        &nbsp;
+        &nbsp;|&nbsp;
         <Link href="/about">About</Link>
       </div>
 

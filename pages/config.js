@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
+import Link from 'next/link'
+import { connect } from 'unistore/preact';
 
 import { store, initConfig, addNotification } from '../lib/store';
-import { connect } from 'unistore/preact';
 
 async function initializeNewRepository () {
   const { config } = store.getState();
@@ -65,6 +66,12 @@ export default connect(['config', 'current'])(({ config, current }) => {
         <button>Update</button>
       </form>
       <button onClick={initializeNewRepository} style={{ width: '100%' }}>Initialize</button>
+
+      <div style={{ fontSize: '0.7rem' }}>
+        <Link href="/">Add a bookmark</Link>
+        &nbsp;|&nbsp;
+        <Link href="/about">About</Link>
+      </div>
     </div>
   );
 });
