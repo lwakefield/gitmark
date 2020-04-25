@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import Link from 'next/link'
 import { connect } from 'unistore/preact';
 
-import { store, initConfig, addNotification } from '../lib/store';
+import * as store from '../lib/store';
 import { encodeToBase64 } from '../lib/util';
 
 async function initializeNewRepository () {
-  const { config } = store.getState();
+  const { config } = store.store.getState();
   const createFromTemplateRequest = await fetch(
     `https://api.github.com/repos/lwakefield/gitmark-template/generate`,
     {
@@ -24,14 +24,14 @@ async function initializeNewRepository () {
     }
   );
   if (createFromTemplateRequest.ok) {
-    addNotification({ type: 'success', message: 'Successfully initialized.' }); 
+    store.addNotification({ type: 'success', message: 'Successfully initialized.' }); 
   } else {
-    addNotification({ type: 'error', message: 'Something went wrong during initialization.' }); 
+    store.addNotification({ type: 'error', message: 'Something went wrong during initialization.' }); 
   }
 }
 
 export default connect(['config', 'current'])(({ config, current }) => {
-  useEffect(initConfig, []);
+  useEffect(store.initConfig, []);
 
   const updateConfig = async (ev) => {
     ev.preventDefault();
@@ -43,10 +43,9 @@ export default connect(['config', 'current'])(({ config, current }) => {
       token: form.querySelector('input[name="token"]').value,
     };
 
-    store.setState({ config });
-    localStorage.setItem('config', JSON.stringify(config));
+    await store.updateConfig(config);
 
-    addNotification({ type: 'success', message: 'Successfully updated configuration.' }); 
+    store.addNotification({ type: 'success', message: 'Successfully updated configuration.' });
   }
 
   return (
