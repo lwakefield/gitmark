@@ -10,48 +10,51 @@ async function addBookmark (ev) {
   ev.preventDefault();
 
   const { config } = store.getState();
+  const headers = {
+    'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`
+  };
+
+  const now = new Date();
+  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
 
   const getBookmarksRequest = await fetch(
-    `https://api.github.com/repos/${config.username}/${config.repositoryName}/contents/bookmarks.jsonl`,
-    {
-      headers: {
-        'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`
-      }
-    }
+    `https://api.github.com/repos/${config.username}/${config.repositoryName}/contents/bookmarks/${today}.jsonl`,
+    { headers },
   );
-  if (!getBookmarksRequest.ok) {
+
+  let bookmarks = '';
+  let sha;
+  if (getBookmarksRequest.status === 200) {
+    const body = await getBookmarksRequest.json();
+    sha = body.sha;
+    bookmarks = decodeFromBase64(body.content);
+  } else if (getBookmarksRequest.status === 404) {
+  } else {
     addNotification({ type: 'error', message: 'Something went wrong adding bookmark.' }); 
     return;
   }
 
-  const body = await getBookmarksRequest.json();
-  const bookmarks = decodeFromBase64(body.content);
-
   const form = ev.target;
-  const now = new Date().toISOString();
   const newBookmark = {
     url: form.querySelector('input[name="url"]').value,
     title: form.querySelector('input[name="title"]').value,
     description: form.querySelector('textarea[name="description"]').value,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString(),
   };
 
   const newBookmarks = bookmarks + `${JSON.stringify(newBookmark)}\n`
 
   const updateBookmarksRequest = await fetch(
-    `https://api.github.com/repos/${config.username}/${config.repositoryName}/contents/bookmarks.jsonl`,
+    `https://api.github.com/repos/${config.username}/${config.repositoryName}/contents/bookmarks/${today}.jsonl`,
     {
       body: JSON.stringify({
         message: `Added "${newBookmark.url}"`,
         content: encodeToBase64(newBookmarks),
-        sha: body.sha,
+        sha,
       }),
       method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': `Basic ${encodeToBase64(`${config.username}:${config.token}`)}`
-      }
+      headers: { 'content-type': 'application/json', ...headers, }
     }
   );
 
