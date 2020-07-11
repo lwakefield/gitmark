@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Gitmark",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Lawrence Wakefield <lawrence@iamlawrence.me>",
 
   "description": "gitmark is a dead simple bookmarking browser extension that saves bookmarks to a GitHub repository.",
